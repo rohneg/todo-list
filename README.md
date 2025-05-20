@@ -182,7 +182,6 @@ int main() {
     for (int i = 0; i < length; i++) {
         free(tasks[i].task);
     }
-    free(tasks);
 
     return 0;
 }
