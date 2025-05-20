@@ -2,7 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-struct Task {
+struct Task 
+{
     char *task;
     int completed;
 };
@@ -11,14 +12,16 @@ struct Task *tasks = NULL;
 int length = 0;
 
 
-void saveTasksToFile() {
+void saveTasksToFile() 
+{
     FILE *file = fopen("tasks.txt", "w");
     if (file == NULL) {
         printf("Error .\n");
         return;
     }
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) 
+    {
         fprintf(file, "%d|%s\n", tasks[i].completed, tasks[i].task);
     }
 
@@ -26,7 +29,8 @@ void saveTasksToFile() {
 }
 
 
-void loadTasksFromFile() {
+void loadTasksFromFile() 
+{
     FILE *file = fopen("tasks.txt", "r");
     if (file == NULL) 
     return;
@@ -52,7 +56,8 @@ void loadTasksFromFile() {
     fclose(file);
 }
 
-void addTask(const char *task) {
+void addTask(const char *task) 
+{
     tasks = (struct Task *)realloc(tasks, (length + 1) * sizeof(struct Task));
     tasks[length].task = (char *)malloc(strlen(task) + 1);
     strcpy(tasks[length].task, task);
@@ -68,23 +73,29 @@ void listTasks() {
         return;
     }
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) 
+    {
         printf("%d. %s [%c]\n", i + 1, tasks[i].task, tasks[i].completed ? 'd' : 'n');
     }
 }
 
-void markCompleted(int index) {
-    if (index > 0 && index <= length) {
+void markCompleted(int index) 
+{
+    if (index > 0 && index <= length) 
+    {
         tasks[index - 1].completed = 1;
         printf("Task marked as completed.\n");
         saveTasksToFile();
-    } else {
-        printf("Invalid index.\n");
-    }
+    } 
+    else 
+    printf("Invalid index.\n");
+    
 }
 
-void editTask(int index, const char *task) {
-    if (index > 0 && index <= length) {
+void editTask(int index, const char *task) 
+{
+    if (index > 0 && index <= length) 
+    {
         index--;
         char *newTask = (char *)realloc(tasks[index].task, strlen(task) + 1);
         if (newTask != NULL) {
@@ -95,28 +106,34 @@ void editTask(int index, const char *task) {
         } else {
             printf("Memory error.\n");
         }
-    } else {
-        printf("Invalid index.\n");
-    }
+    } 
+    else 
+    printf("Invalid index.\n");
+    
 }
 
-void deleteTask(int index) {
-    if (index > 0 && index <= length) {
+void deleteTask(int index) 
+{
+    if (index > 0 && index <= length) 
+    {
         index--;
         free(tasks[index].task);
-        for (int i = index; i < length - 1; i++) {
+        for (int i = index; i < length - 1; i++) 
+        {
             tasks[i] = tasks[i + 1];
         }
         length--;
         tasks = (struct Task *)realloc(tasks, length * sizeof(struct Task));
         printf("Task deleted.\n");
         saveTasksToFile();
-    } else {
+    } 
+    else 
         printf("Invalid index.\n");
-    }
+    
 }
 
-int main() {
+int main() 
+{
     int choice, running = 1, indexInput;
     char taskInput[100];
 
@@ -130,10 +147,11 @@ int main() {
     printf("5. Delete task\n");
     printf("6. Exit\n");
 
-    while (running) {
+    while (running) 
+    {
         printf("\nEnter choice (1-6): ");
         scanf("%d", &choice);
-        getchar(); // clear newline
+        getchar(); 
 
         switch (choice) {
             case 1:
@@ -179,9 +197,11 @@ int main() {
         }
     }
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) 
+    {
         free(tasks[i].task);
     }
+    
 
     return 0;
 }
